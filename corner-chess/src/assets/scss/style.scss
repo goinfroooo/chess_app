@@ -1,0 +1,19 @@
+@import "./custom_variable.scss";
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+/* Ajustements pour la navbar à gauche */
+body {
+    padding-left: 250px; /* Largeur de la navbar à gauche */
+}
+
+.fixed-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px; /* Ajustez la largeur selon vos besoins */
+    background-color: #f8f9fa; /* Couleur de fond de la navbar */
+    border-right: 1px solid #e1e1e1; /* Bordure droite pour séparation */
+    overflow-y: auto; /* Ajoutez une barre de défilement si nécessaire */
+}
+

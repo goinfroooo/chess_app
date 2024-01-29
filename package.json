@@ -1,0 +1,26 @@
+{
+  "name": "project2",
+  "version": "1.0.0",
+  "description": "chess app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goinfroooo/chess_app.git"
+  },
+  "keywords": [
+    "chess"
+  ],
+  "author": "Erwan SORIA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/goinfroooo/chess_app/issues"
+  },
+  "homepage": "https://github.com/goinfroooo/chess_app#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.2"
+  }
+}
