@@ -1,16 +1,16 @@
 <template>
-    <div class="content mt-2">
+    <div class="content mt-2 d-flex justify-content-center">
         <div id="board" class="board p-0 bg-light">
-            <!-- Ajoutez ici le reste du contenu de votre page -->
+            <!-- On creer les cases du plateaux -->
             <template v-for="(column,index) in columns" :key="index">
                 <div v-for="(row,index2 ) in rows" 
-                @click="board_make_deplacement(parameters,piece_clicked, $event)"
+                @click="board_make_deplacement(parameters,piece_clicked, $event)"  
                 :id="column + row" 
                 class="square" 
                 :style="create_square_position(index,index2+1)">
             </div>
             </template>
-
+            <!-- On creer les pièces -->
             <i v-for="(square,piece) in board_pieces"  
             @click="board_view_deplacement($event)"
             :id="piece" 
@@ -24,17 +24,23 @@
 
 <script setup>
 
+//On importe les 2 scripts qui permettent de gérer la logique du plateau
+
 import * as view_deplacement from "../script/view_piece_deplacement.js";
 import * as make_deplacement from "../script/make_piece_deplacement.js";
+
+//On définit un tas de parametres
 
 const columns = ["a","b","c","d","e","f","g","h",];
 const rows = ["1","2","3","4","5","6","7","8",];
 
-const board_height = 400;
+const board_height = 400; //donne la taille en pixel du plateau (pas responsive pour le moment)
 const board_width = 400;
 const piece_height = board_height/columns.length;
 const piece_width = board_width/rows.length;
 
+//On wrap tous les parametres pour les passer aux fonctions js c'est plus compact
+//TODO : revoir ça, ça me parait bourin et souvent inutile, on a juste besoin de rows et columns en général
 const parameters = {
   columns: columns,
   rows: rows,
@@ -44,6 +50,8 @@ const parameters = {
   piece_width: piece_width,
 };
 
+//Variable très importante, elle définit l'état du plateau
+//A terme il faudra que cette variable sois passé via un slot au chargement du composant pour pouvoir reprendre des parties en cours
 let board_pieces = {
 
     //black pieces
@@ -85,14 +93,14 @@ let board_pieces = {
     
 };
 
-let piece_clicked = "";
-let trait = "white";
-
-
+let piece_clicked = "";//Permet de garder en mémoire la pièce cliquée actuellement par le joueur.
+//La pièce cliquée est la pièce dont on souhaite voir les déplacements
+let trait = "white"; //Permet de dire a qui c'est de jouer. 
+//TODO : le récupérer d'un slot aussi ?
 
 const board_view_deplacement = (event) => {
 
-    if (view_deplacement.retrieve_piece_color(event.target.id)!==trait){
+    if (view_deplacement.retrieve_piece_color(event.target.id)!==trait){  
         alert(trait+" turn");
         console.log (trait);
         return -1;
