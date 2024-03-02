@@ -1,13 +1,8 @@
-import * as colision from "./make_piece_deplacement";
-
-
-
-export const view_move = (parameters,board, event) => {
+export const view_move = (parameters,board, event) => {//grosse fonction qui gere toutes la previsualisation des coups
     
-    downlight_square();
-    all_piece_square(parameters);
+    downlight_square(); //Pour reset l'affichage
     
-    const piece_clicked = event.target.id;
+    const piece_clicked = event.target.id; 
     let piece_type = retrieve_piece_type (piece_clicked) ;
     let piece_color = retrieve_piece_color (piece_clicked) ;
     let square = board[piece_clicked];
@@ -65,9 +60,12 @@ export const convert_position_to_square = (parameters, position ) => {
 
 
 export const all_rules_displacement = (parameters, square, type_piece,piece_color,board ) => {
-
+//Cette fonction sert a determiner toutes les cases atteignables par la pièce concernée.
+//square : la case de départ de la pièce concernée
+//board : l'etat du plateau avec le positionnement de chaque pièce.
     let all_displacement = [];
-    let all_pieces_square = all_piece_square(parameters,board);
+    let all_pieces_square = all_piece_square(parameters,board); //Récupère toutes les cases sur lesquelles il y a une pièce.
+    //ca permet de gagner un peu de temps par la suite.
 
     if (type_piece === 'white-pawn') {
         all_displacement=white_pawn_deplacement(parameters,square,all_pieces_square,piece_color,board);
@@ -100,15 +98,16 @@ export const highlight_square = (square_to_highlight ) => {
         
         let squareElement = document.getElementById(square);
         console.log(squareElement);
-        squareElement.style.backgroundColor = "red";
-        squareElement.style.opacity = "50%";
-        squareElement.style.zIndex = 1;
-        squareElement.dataset.highlighted = "true";
+        squareElement.style.backgroundColor = "red"; //Illumine les cases
+        squareElement.style.opacity = "50%"; //pour avoir un rendu sympa
+        squareElement.style.zIndex = 1; //Pur mettre les cases au 1er plan et pouvoir cliquer facilement dessus ensuite
+        squareElement.dataset.highlighted = "true"; //Modifie la propriété data-highlited des cases; 
+        //Cela permet de savoir plus facilement si la case est illuminée ou non dans le reste de l'app
     }
 }
 
 export const downlight_square = () => {
-
+    //enleve la surbrillance et rend leur style de base aux cases
 
     let squareElement = document.getElementsByClassName("square");
 
@@ -544,7 +543,7 @@ export const king_deplacement = (parameters,square,all_pieces_square,color,board
 }
 
 
-export const all_piece_square= (parameters,board) => {
+export const all_piece_square= (parameters,board) => {//renvoit toutes les cases sur lesquelles il y a une pièce
 
     let all_pieces_square = [];
     const pieces = document.querySelectorAll('.piece');
@@ -555,13 +554,13 @@ export const all_piece_square= (parameters,board) => {
     return all_pieces_square;
 }
 
-export const retrieve_piece_by_square = (board,square) => {
+export const retrieve_piece_by_square = (board,square) => {//permet de savoir quelle pièce est sur une case donnée
 
     for (const piece in board) {
         if (board[piece] === square) {
             return piece;
         }
     }
-    console.error ("le board ne correspond pas a la réalité")
+    console.error ("le board ne correspond pas a la réalité")//important, ce cas ne dois pas se produire
     return -1
 }

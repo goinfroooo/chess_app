@@ -1,42 +1,23 @@
 <template>
-    <div>
-    <!-- Navbar à gauche -->
-    <nav class="sidebar fixed-left bg-light">
-        <div class="container-fluid mt-3">
-            <div class="d-flex justify-content-center">
-                <h1 class="fw-bold"><router-link class="navbar-brand " to="/">Menu</router-link></h1>
-            </div>
-            <div class="d-flex align-item-center">
-                <ul class="navbar-nav">
-                    <li class="nav-item fs-2 p-3"><a class="nav-link" v-on:click="ready_to_play">Jouer</a></li>
-                    <li class="nav-item fs-2 p-3">Parties en cours</li>
-                    <li class="nav-item fs-2 p-3">Statistiques</li>
-                </ul>
-            </div>
-            
-        </div>
-    </nav>
-    </div>
+
+    <div id="game_list"></div>
+
 </template>
 
-
-
 <script setup>
-import router from '../../router';
-import Config from "../config";
-import { getCsrfToken,AskCsrfToken,getUserToken } from "@/script/token";
 
-const ready_to_play = () => {
+const game_list = {};
+
+const retrieve_game_list = async () => {
 
     const user_token = getUserToken();
     if (user_token==null) {
-        alert("veuillez vous connecter avant de jouer");
+        alert("veuillez vous connecter pour voir vos parties en cours");
         return -1;
     }
-
     else {
         console.log(user_token);
-        const route = "/player_status/ready_to_play";
+        const route = "/game/player_games_active";
         let options = {
             method: 'POST',
             headers: {
@@ -57,6 +38,7 @@ const ready_to_play = () => {
         .then(data => {
             // Traiter la réponse du serveur (si nécessaire)
             console.log(data);
+            game_list=data;
             alert ("ça marche. Vous pouvez consulter vos parties en cours dans l'onglet correspondant");
 
         })
@@ -66,14 +48,12 @@ const ready_to_play = () => {
             alert ("erreur : veuillez contacter l'administrateur du site")
         });
     }
-
 }
+
 
 </script>
 
 <style scoped>
 
-.sidebar {
-    margin-top: 50px;
-}
+
 </style>

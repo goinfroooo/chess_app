@@ -1,6 +1,7 @@
 import { all_piece_square, all_rules_displacement, downlight_square, highlight_square, retrieve_piece_color, retrieve_piece_type } from "./view_piece_deplacement";
+//On a besoin de quelques fonctions deja definie. Peut etre resegmenter les fichiers et créer un script "utilitaire" ?
 
-let pieceClicked = "";
+let pieceClicked = "";//Pas utile ?
 
 
 export function initMakeDeplacement(initialPieceClicked) {
@@ -9,7 +10,6 @@ export function initMakeDeplacement(initialPieceClicked) {
 }
 
 export const check_deplacement =(parameters,piece_clicked,pieces_positions, event) => {
-
 
     if ((event.target.dataset.highlighted==="false")) {
       return  {"status":-2,"board":pieces_positions} //On ne peux pas bouger sur des cases non highlited

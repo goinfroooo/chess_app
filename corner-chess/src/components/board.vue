@@ -98,35 +98,34 @@ let piece_clicked = "";//Permet de garder en mémoire la pièce cliquée actuell
 let trait = "white"; //Permet de dire a qui c'est de jouer. 
 //TODO : le récupérer d'un slot aussi ?
 
-const board_view_deplacement = (event) => {
+const board_view_deplacement = (event) => { //Fonction de callback lors du click sur une pièce
 
-    if (view_deplacement.retrieve_piece_color(event.target.id)!==trait){  
-        alert(trait+" turn");
-        console.log (trait);
+    if (view_deplacement.retrieve_piece_color(event.target.id)!==trait){  //si la pièce cliquée est de la mauvaise couleur
+        alert(trait+" turn"); //a modifier dans le futur. On ne va pas alert pour ca
         return -1;
     } 
-    piece_clicked = view_deplacement.view_move(parameters,board_pieces, event);
+    piece_clicked = view_deplacement.view_move(parameters,board_pieces, event); //On appelle view deplacement, dans le fichier view_piece_deplacement.js
     console.log (piece_clicked);
 }
 
-const board_make_deplacement = (parameters,piece, event) => {
+const board_make_deplacement = (parameters,piece, event) => {//fonction de callback pour l'appui sur une case
     console.log (board_pieces);
-    const result = make_deplacement.check_deplacement(parameters,piece,board_pieces, event);
-    if (result.status===0) {
-        board_pieces = result.board;
-        actualise_board (board_pieces) ;
-        view_deplacement.downlight_square();
-        console.log (board_pieces);
+    const result = make_deplacement.check_deplacement(parameters,piece,board_pieces, event); 
+    if (result.status===0) { //déplacement permis
+        board_pieces = result.board; //On actualise le board dans la variable js
+        actualise_board (board_pieces) ; //on actualise graphiquement le board
+        view_deplacement.downlight_square(); 
+        console.log (board_pieces);//for debug
         
         trait=trait==="white" ? "black" : "white" //on change le trait
-        make_deplacement.check_endgame (parameters,board_pieces,trait);
+        make_deplacement.check_endgame (parameters,board_pieces,trait); //On vérifie si la partie est terminée
     }
     
     
-    console.log (result);
+    console.log (result); //for debug
 }
 
-const actualise_board = (board_pieces) => {
+const actualise_board = (board_pieces) => { //sert a mettre a jour l'affichage du plateau a l'utilisateur
     let DOM_board = document.querySelectorAll(".piece");
     
 
@@ -149,7 +148,7 @@ const actualise_board = (board_pieces) => {
 }
 
 
-const icon_piece = (input_piece) => {
+const icon_piece = (input_piece) => {//cette fonction sert a definir la bonne icone font awesome en fonction de la pièce
 
     let piece = input_piece.split("-")[1];
     piece = piece.replace(/\d/g, '');
@@ -157,7 +156,7 @@ const icon_piece = (input_piece) => {
     return " fa-chess-"+piece+" ";
 };
 
-const color_piece = (piece) => {
+const color_piece = (piece) => {//Cette fonction sert a definir graphiquement la couleur de la pièce en fonction de la pièce
 
     const color = piece.split("-")[0];
     //console.log(color);
@@ -166,7 +165,7 @@ const color_piece = (piece) => {
     else {return "";}
 };
 
-const create_square_position = (column,row) => {
+const create_square_position = (column,row) => {//Sert a positionner toutes les divs representant les cases du plateau aux bons endroit du plateau
 
     //console.log (column,row);
     //console.log (board_width,piece_width);
@@ -186,7 +185,7 @@ const create_square_position = (column,row) => {
 
 <style scoped>
 
-    @import "../assets/css/chess_style.css";
+    @import "../assets/css/chess_style.css"; 
     .content {
 
     width: 800px;
