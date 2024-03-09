@@ -35,7 +35,7 @@
         <div class="card h-100 w-100 bg-light rounded-0">
             <div class="card-body">
                 <div class="row gy-4 gy-md-0">
-                    <h1 class="card-title fw-bold section_title" >Déplacement des pièces</h1>
+                    <h1 id="deplacement_piece_title" class="card-title fw-bold section_title" >Déplacement des pièces</h1>
                     <section id= pawn_displacement>
                         <h2 id="pawn_title" class="card-title subtitle">Le pion</h2>
                         <div class="border border-3 border-dark-subtle rounded-3 p-3">

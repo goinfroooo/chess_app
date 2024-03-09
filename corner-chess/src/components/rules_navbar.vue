@@ -32,14 +32,10 @@
 
 import "https://code.jquery.com/jquery-3.6.0.min.js";
 import "../script/scrolling";
-import {ref} from "vue";
+import {ref,onMounted} from "vue";
 import { add_scrolling_event } from "../script/scrolling";
 
-let menu_structure = ref([
-  {"section_title":"C à jouer","section_id":"blabla","subtitle":[]},
-  {"section_title":"Déplacement des pièces","section_id":"blabla","subtitle":[]},
-  {"section_title":"Règles spéciales","section_id":"blabla","subtitle":[]}
-]);
+let menu_structure = ref([]);
 console.log(menu_structure.value);
 
 const retrieve_DOM_rules = () => {
@@ -76,15 +72,12 @@ const retrieve_DOM_rules = () => {
     return structure;
 }
 
-window.addEventListener('load', function() {
-    // Code à exécuter une fois que tous les éléments de la page sont chargés
-    console.log('Tous les éléments de la page ont été chargés.');
+
+onMounted(async () => {
     menu_structure.value=retrieve_DOM_rules();
     add_scrolling_event();
-    
 });
 
-// Observer les changements de menu_structure pour mettre à jour l'affichage HTML en conséquence
 
 
 

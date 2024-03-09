@@ -8,8 +8,12 @@
             </div>
             <div class="d-flex align-item-center">
                 <ul class="navbar-nav">
-                    <li class="nav-item fs-2 p-3"><a class="nav-link" v-on:click="ready_to_play">Jouer</a></li>
-                    <li class="nav-item fs-2 p-3">Parties en cours</li>
+                    <li class="nav-item fs-2 p-3">
+                        <a class="nav-link" v-on:click="ready_to_play">Demander une partie</a>
+                    </li>
+                    <li class="nav-item fs-2 p-3">
+                        <router-link to="/game_list" class="nav-link">Parties en cours</router-link>
+                    </li>
                     <li class="nav-item fs-2 p-3">Statistiques</li>
                 </ul>
             </div>
@@ -22,7 +26,6 @@
 
 
 <script setup>
-import router from '../../router';
 import Config from "../config";
 import { getCsrfToken,AskCsrfToken,getUserToken } from "@/script/token";
 
@@ -57,7 +60,7 @@ const ready_to_play = () => {
         .then(data => {
             // Traiter la réponse du serveur (si nécessaire)
             console.log(data);
-            alert ("ça marche. Vous pouvez consulter vos parties en cours dans l'onglet correspondant");
+            alert ("Demande prise en compte. La partie sera créée quand un autre joueur sera disponible");
 
         })
         .catch(error => {

@@ -99,14 +99,19 @@ export const check_endgame =(parameters, board,trait) => {
     
   if (mat && check) {
     alert ("fin de partie : victoire des "+opposite_color+" par échec et mat")
+    return 1;
   }
 
   else if (mat) {
     alert ("fin de partie : nulle par pat");
+    return 2;
   }
 
+  else {
+    return 0;
+  }
 
-
+  return -1; //En cas d'erreur
 
 }
 
