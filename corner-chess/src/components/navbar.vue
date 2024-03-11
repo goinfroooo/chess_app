@@ -9,7 +9,7 @@
             <div class="d-flex align-item-center">
                 <ul class="navbar-nav">
                     <li class="nav-item fs-2 p-3">
-                        <a class="nav-link" v-on:click="ready_to_play">Demander une partie</a>
+                        <a class="nav-link nav-link-special" v-on:click="ready_to_play">Demander une partie</a>
                     </li>
                     <li class="nav-item fs-2 p-3">
                         <router-link to="/game_list" class="nav-link">Parties en cours</router-link>
@@ -78,5 +78,12 @@ const ready_to_play = () => {
 
 .sidebar {
     margin-top: 50px;
+}
+
+.nav-link-special:hover {
+    /* Ajoutez ici les styles pour le survol */
+    color: #007bff; /* Couleur de lien standard de Bootstrap */
+    text-decoration: underline; /* Souligner le texte au survol */
+    cursor: pointer; /* Curseur de type main pour indiquer qu'il s'agit d'un lien cliquable */
 }
 </style>
