@@ -5,6 +5,7 @@ import Rules from '/src/components/rules.vue';
 import Inscription from './src/components/inscription_form.vue';
 import Profil from './src/components/profil.vue';
 import Game_list from './src/components/game_list.vue';
+import Statistiques from './src/components/statistiques.vue'
 
 const routes = [
   { path: '/',name:"Home", component: {template: '<div></div>'}},
@@ -14,6 +15,8 @@ const routes = [
   { path: '/game_list',name:"game_list", component: Game_list },
   { path: '/game',name:"game", component: Game },
   { path: '/test',name:"test", component: Test },
+  { path: '/statistiques',name:"statistiques", component: Statistiques },
+  { path: '/sandbox',name:"sandbox", component: Game },
   
 
 ];

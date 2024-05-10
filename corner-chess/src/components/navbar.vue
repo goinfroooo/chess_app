@@ -14,7 +14,12 @@
                     <li class="nav-item fs-2 p-3">
                         <router-link to="/game_list" class="nav-link">Parties en cours</router-link>
                     </li>
-                    <li class="nav-item fs-2 p-3">Statistiques</li>
+                    <li class="nav-item fs-2 p-3">
+                        <router-link to="/statistiques" class="nav-link">Statistiques</router-link>
+                    </li>
+                    <li class="nav-item fs-2 p-3">
+                        <router-link to="/sandbox" class="nav-link">Sandbox</router-link>
+                    </li>
                 </ul>
             </div>
             
