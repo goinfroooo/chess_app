@@ -21,7 +21,7 @@
                         <td class="p-3 border-black border-2 w-50">{{ game.pseudo }}</td>
                         <td class="p-3 border-black border-2">{{ game.color }}</td>
                         <td class="p-3 border-black border-2">{{ game.trait }}</td>
-                        <td class="p-3 border-black border-2">{{ game.statut }}</td>
+                        <td class="p-3 border-black border-2">{{ game.status }}</td>
                     </tr>
                 </table>
             </div>
@@ -30,20 +30,20 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 
 import {ref,onMounted} from "vue";
-import { gameStore } from '../stores/game_store';
-import { useRouter } from 'vue-router';
-
+import { gameStore } from '../stores/game';
+import { RouteComponent, useRouter } from 'vue-router';
 import Config from "../config";
 import { getCsrfToken,getUserToken } from "@/script/token";
+import { Game } from "@/script/interface";
 
-const router = useRouter();
+const router:RouteComponent = useRouter();
 
 const current_game = gameStore();
-let game_list = ref([]);
+let game_list = ref<Game[]>([]);
 
 const retrieve_game_list = async () => {
     const user_token = getUserToken();
@@ -82,13 +82,13 @@ onMounted(async () => {
   await retrieve_game_list(); // Appelez retrieve_game_list lorsque le composant est monté
 });
 
-const handleClick = (game,event) => {
+const handleClick = (game:Game ,event:MouseEvent) => {
 
-    console.log (game);
-    window.localStorage.setItem("current_game",JSON.stringify(game))
-    current_game.setId(game.id);
-    current_game.setBoard(game.board);
-    console.log (current_game.Board);
+    //console.log (game);
+    //window.localStorage.setItem("current_game",JSON.stringify(game))
+    current_game.setGame(game);
+    current_game.setIsSandbox(false);
+    console.log (current_game.Game.board);
     router.push({ name: 'game'});
 }
 

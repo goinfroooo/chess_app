@@ -56,9 +56,10 @@
     </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 
+import { DisplayError } from "@/script/error_class";
 import { getCsrfToken,AskCsrfToken,setCookie } from "../script/token";
 
 
@@ -68,41 +69,44 @@ const props = defineProps(["backendConfig"]);
 const submit_connexion_form = async () => {
     // Récupérer les données du formulaire
     
-    var form = document.getElementById('connexion_form');
-    console.log (form);
-    var formData = new FormData(form);
-    const route = "/user/get_user_token";
-    // Envoyer les données via Fetch
-    await AskCsrfToken ();
+    let form = document.getElementById('connexion_form');
+    if (form instanceof HTMLFormElement) {
+        let formData = new FormData(form);
+        const route = "/user/get_user_token";
+        // Envoyer les données via Fetch
+        await AskCsrfToken ();
 
-    let options = {
-        method: 'POST',
-        headers: {
-            "X-CSRF-TOKEN":getCsrfToken(),
-        },
-        body: formData,
-    }
-    console.log (options);
-    fetch(props.backendConfig.apiUrl+route, options)
-    .then(response => {
-        console.log(response)
-        if (!response.ok) {
-            throw new Error('La requête a échoué.');
+        let options = {
+            method: 'POST',
+            headers: {
+                "X-CSRF-TOKEN":getCsrfToken(),
+            },
+            body: formData,
         }
-        return response.json();
-    }) // Si le script PHP renvoie du JSON
-    .then(data => {
-        // Traiter la réponse du serveur (si nécessaire)
-        console.log(data.token);
-        setCookie("USER-TOKEN",data.token,30)
-        alert ("connected");
+        console.log (options);
+        fetch(props.backendConfig.apiUrl+route, options)
+        .then(response => {
+            console.log(response)
+            if (!response.ok) {
+                throw new Error('La requête a échoué.');
+            }
+            return response.json();
+        }) // Si le script PHP renvoie du JSON
+        .then(data => {
+            // Traiter la réponse du serveur (si nécessaire)
+            console.log(data.token);
+            setCookie("USER-TOKEN",data.token,30)
+            alert ("connected");
 
-    })
-    .catch(error => {
-        // Gérer les erreurs de la requête
-        console.error("Erreur lors de l'envoi du formulaire:", error);
-        alert ("erreur : veuillez contacter l'administrateur du site")
-    });
+        })
+        .catch(error => {
+            // Gérer les erreurs de la requête
+            console.error("Erreur lors de l'envoi du formulaire:", error);
+            alert ("erreur : veuillez contacter l'administrateur du site")
+        });
+    }else {
+        throw new DisplayError ("le formulaire ne peut etre récupéré dans la page");
+    }
 }
 
 

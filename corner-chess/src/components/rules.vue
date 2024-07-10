@@ -11,7 +11,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 import rules_description from "./rules_description.vue"
 import navbar_rules from "./rules_navbar.vue";
@@ -19,7 +19,6 @@ import navbar_rules from "./rules_navbar.vue";
 </script>
 
 <style scoped>
-    @import "../assets/css/rules_style.css";
 
 
 

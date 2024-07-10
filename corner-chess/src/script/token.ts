@@ -1,5 +1,6 @@
 import Config from "@/config";
-
+import {TokenError} from "./error_class";
+ 
 export const AskCsrfToken = async () =>  {
     
     await fetch(Config.backendConfig.apiUrl+'/csrf-token', {
@@ -22,7 +23,7 @@ export const getCsrfToken = () => {
     if (csrfCookie) {
         return decodeURIComponent(csrfCookie[1]); // Décode le contenu du cookie si nécessaire
     }
-    return null;
+    throw new TokenError ("le cookie CSRF n'est pas présent");
 }
 
 export const getUserToken = () => {
@@ -30,18 +31,20 @@ export const getUserToken = () => {
     if (Cookie) {
         return decodeURIComponent(Cookie[1]); // Décode le contenu du cookie si nécessaire
     }
-    return null;
+    else {
+        throw new TokenError ("le cookie utilisateur n'est pas présent");
+    };
 }
 
 // Créer une instance Axios avec le jeton CSRF inclus dans les en-têtes
 
-export const IfExistCookie = (name) => {
+export const IfExistCookie = (name:string) => {
     let regex = new RegExp('(?:^|;\\s*)' + name + '=([^;]*)');
     let match = regex.exec(document.cookie);
     return match !== null;
 }
 
-export const setCookie = (name, value, daysToExpire) =>{
+export const setCookie = (name:string, value:string, daysToExpire:number) =>{
     let date = new Date();
     date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
     let expires = "expires=" + date.toUTCString();
@@ -50,6 +53,6 @@ export const setCookie = (name, value, daysToExpire) =>{
     document.cookie = name + "=" + value + ";" + expires + ";path=/"+";"+secure+";"+sameSite;
 }
 
-export const deleteCookie = (name) => {
+export const deleteCookie = (name:string) => {
     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;";
 }

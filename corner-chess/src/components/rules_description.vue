@@ -43,13 +43,13 @@
                             <p>Le pion peut se déplacer d'une seule case à la fois.
                                 Il peut se déplacer le long des lignes ou des colonnes
                             </p>
-                            <img src="../assets/img/placeholder.png" >
+                            <img src="../assets/img/pawn_displacement.png" >
                             <p>Si une pièce alliée ou adverse bloque son avancée, il ne peut pas se déplacer.
                                 En revanche si une pièce adverse se situe sur sa diagonale, il peut la capturer.
                             </p>
-                            <img src="../assets/img/placeholder.png" >
+                            <img src="../assets/img/pawn_capture.png" >
                             <p>Les pions ne peuvent qu'avancer. Lorsqu'ils atteignent le bord du plateau, ils sont bloqués.</p>
-                            <img src="../assets/img/placeholder.png" >
+                            <img src="../assets/img/pawn_blocked.png" >
                             <h4 class="text-decoration-underline">Astuces</h4>
                             <p>Les pions sont l'âme du corner chess.
                                 Contrairement aux échecs classiques ils peuvent se déplacer suivant 2 directions,
@@ -65,11 +65,11 @@
                         <div class="border border-3 border-dark-subtle rounded-3 p-3">
                             <h4 class="text-decoration-underline">Déplacement</h4>
                             <p>Le cavalier est une pièce flexible, qui se déplace en formant un L.</p>
-                            <img src="../assets/img/placeholder.png" >
+                            <img src="../assets/img/knight_displacement.png" >
                             <p>Sa particularité vient de sa capacité à sauter par dessus les pièces,
                                 alliées comme adverse.
                             </p>
-                            <img src="../assets/img/placeholder.png" >
+                            <img src="../assets/img/knight_jump.png" >
                             <h4 class="text-decoration-underline">Astuces</h4>
                             <p>Le cavalier est une pièce unique dans le corner chess. 
                                 Grace à sa grande mobilité il est possible de la développer très rapidement,
@@ -85,7 +85,7 @@
                         <div class="border border-3 border-dark-subtle rounded-3 p-3">
                             <h4 class="text-decoration-underline">Déplacement</h4>
                             <p>Le fou peu se déplacer en diagonale, sur une ou plusieurs cases</p>
-                            <img src="../assets/img/placeholder.png" >
+                            <img src="../assets/img/bishop_displacement.png" >
                             <p>Si une pièce alliée bloque son avancée, elle ne peut pas la dépasser.
                                 En revanche s'il s'agit d'une pièce adverse, elle peut la capturer.
                             </p>
@@ -103,7 +103,7 @@
                         <div class="border border-3 border-dark-subtle rounded-3 p-3">
                             <h4 class="text-decoration-underline">Déplacement</h4>
                             <p>La tour peut se déplacer le long des lignes et des colonnes</p>
-                            <img src="../assets/img/placeholder.png" >
+                            <img src="../assets/img/rook_displacement.png" >
                             <p>Si une pièce alliée bloque son avancée, elle ne peut pas la dépasser.
                                 En revanche s'il s'agit d'une pièce adverse, elle peut la capturer.
                             </p>
@@ -121,7 +121,7 @@
                         <div class="border border-3 border-dark-subtle rounded-3 p-3">
                             <h4 class="text-decoration-underline">Déplacement</h4>
                             <p>La dame peut se déplacer le long des lignes et des colonnes, mais également en diagonale</p>
-                            <img src="../assets/img/placeholder.png" >
+                            <img src="../assets/img/queen_displacement.png" >
                             <p>Si une pièce alliée bloque son avancée, elle ne peut pas la dépasser.
                                 En revanche s'il s'agit d'une pièce adverse, elle peut la capturer.
                             </p>
@@ -139,7 +139,7 @@
                         <div class="border border-3 border-dark-subtle rounded-3 p-3">
                             <h4 class="text-decoration-underline">Déplacement</h4>
                             <p>Le roi peut se déplacer d'une seule case, dans n'importe quelle direction du plateau.</p>
-                            <img src="../assets/img/placeholder.png" >
+                            <img src="../assets/img/king_displacement.png" >
                             <p>Si une pièce alliée bloque son avancée, elle ne peut pas la dépasser.
                                 En revanche s'il s'agit d'une pièce adverse, elle peut la capturer.
                             </p>
@@ -197,7 +197,7 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 </script>
 

@@ -13,7 +13,7 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 import inscription_form from "./components/inscription_form.vue";
 import Config from "./config.js"

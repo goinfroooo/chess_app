@@ -1,7 +1,7 @@
 import * as vueRouter from 'vue-router';
 import Test from './src/components/test.vue';
 import Game from './src/components/board.vue';
-import Rules from '/src/components/rules.vue';
+import Rules from './src/components/rules.vue';
 import Inscription from './src/components/inscription_form.vue';
 import Profil from './src/components/profil.vue';
 import Game_list from './src/components/game_list.vue';

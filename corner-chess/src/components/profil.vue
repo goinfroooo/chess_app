@@ -1,51 +1,65 @@
 <template>
 
     <section id="profil">
-        <div class="container ps-2 m-3 bg-light">
-            <div class="row ">
-                
-                <h1 class="d-flex justify-content-center">Profil</h1>
-                <table class="border border-black border-3 w-100" >
-                    <tr>
-                        <td class="p-3 bg-dark bg-gradient fw-bold text-white">Prenom</td>
-                        <td class="p-3 bg-light text-dark">{{ profil.first_name}}</td>
-                        <td class="p-3 bg-dark bg-gradient fw-bold text-white">Nom</td>
-                        <td class="p-3 bg-light text-dark">{{ profil.last_name}}</td>
-                    </tr>
-                    <tr>
-                        <td class="p-3 bg-primary bg-gradient fw-bold" style="--bs-bg-opacity: .8;">Pseudo</td>
-                        <td class="p-3 bg-light text-dark border border-1">{{ profil.pseudo}}</td>
-                        <td class="p-3 bg-primary bg-gradient fw-bold" style="--bs-bg-opacity: .8;">Adresse mail</td>
-                        <td class="p-3 bg-light text-dark border border-1">{{ profil.email}}</td>
-                    </tr>
-                    <tr>
-                        <td class="p-3 bg-dark bg-gradient fw-bold text-white">Date de naissance</td>
-                        <td class="p-3 bg-light text-dark">{{ date_anniversaire}}</td>
-                        <td class="p-3 bg-dark bg-gradient fw-bold text-white">Profil crée le</td>
-                        <td class="p-3 bg-light text-dark">{{ date_creation}}</td>
-                    </tr>
+        <div class="container-fluid ps-2 m-3 bg-light">
+            <div v-if="!profil" class="spinner-border " role="status">
+                <span class="visually-hidden ">Loading...</span>
+            </div>
+            <div v-else>
+                <div class="row me-2">
+                    <div class="card col-12">
+                        <div class="d-flex">
+                            <img class="rounded-3 me-3" :src="Config.backendConfig.apiUrl+'/storage/img/profil.PNG'" height="50px" width="50px">
+                            <h1 class="d-flex justify-content-center card-title">Profil</h1>
+                        </div>
+                        
+                        <div class="card-body rounded-3 border border-2 border-black my-2">
+                            <div class=" container" >
+                                <div class="row">
+                                    <div class="col-6 col-md-3 p-3 rounded-3 bg-light ">Prénom</div>
+                                    <div class="col-6 col-md-3 p-3  "><input type="text" v-model="profil.first_name" class="form-control"></div>
+                                    <div class="col-6 col-md-3 p-3  bg-light ">Nom</div>
+                                    <div class="col-6 col-md-3 p-3  "><input type="date" v-model="profil.last_name" class="form-control"></div>
 
-                    
-                </table>
+                                    <div class="col-6 col-md-3 p-3  bg-light " style="--bs-bg-opacity: .8;">Adresse mail</div>
+                                    <div class="col-6 col-md-3 p-3 " style="max-width: 25%; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ profil.email}} <br><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_mail">modifier l'email</button></div>
+                                    <div class="col-6 col-md-3 p-3  bg-light " style="--bs-bg-opacity: .8;">Pseudo</div>
+                                    <div class="col-6 col-md-3 p-3 "><input v-model="profil.pseudo" class="form-control"></div>
+                                    
+                                    <div class="col-6 col-md-3 p-3  bg-light " style="--bs-bg-opacity: .8;">Date de naissance</div>
+                                    <div class="col-6 col-md-3 p-3 "><input v-model="date_anniversaire" class="form-control"></div>
+                                    <div class="col-6 col-md-3 p-3  bg-light ">Profil crée le</div>
+                                    <div class="col-6 col-md-3 p-3 ">{{ date_creation}}</div>
+                                    
+                                </div>
 
+                                
+                            </div>
+                        </div>
+                        <button class="bg-light border-3" @click="save_change()">Sauvegarder</button>
+                    </div>
+                </div>
             </div>
         </div>
-        
     </section>
+
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted,ref,computed} from 'vue';
 import Config from "../config";
 import { getCsrfToken,getUserToken } from "@/script/token";
+import {Profil} from "../script/interface";
+import  { NetworkError } from '@/script/error_class';
 
 
-const profil = ref({"created_at":"2024-02-08T10:02:46.000000Z","birthday":"2000-01-01"}) ;
-const date_creation = computed (() =>{
-    //let dateString = '2024-03-08T10:02:46.000000Z';
+const profil = ref<Profil | null>(null) ;
+const date_creation = computed (():string =>{
+    if (profil.value === null) {
+        return "";
+    }
     let dateString = profil.value.created_at;
-    
     const months = [
         "janvier", "février", "mars", "avril", "mai", "juin",
         "juillet", "août", "septembre", "octobre", "novembre", "décembre"
@@ -60,7 +74,11 @@ const date_creation = computed (() =>{
     return formattedDate;
 });
 
-const date_anniversaire = computed (() =>{
+const date_anniversaire = computed (():string =>{
+
+    if (profil.value === null) {
+        return "";
+    }
     let dateString = profil.value.birthday;
     const months = [
         "janvier", "février", "mars", "avril", "mai", "juin",
@@ -76,50 +94,48 @@ const date_anniversaire = computed (() =>{
 
 
 
-const retrieve_profil = async () => {
-
+const retrieve_profil = async (): Promise<{ email: string; birthday: string; created_at: string; pseudo: string; last_name: string; first_name: string; } | null> => {
     const user_token = getUserToken();
-    if (user_token==null) {
+    if (user_token == null) {
         alert("veuillez vous connecter pour voir votre profil");
-        return -1;
-    }
-    else {
+        return null;
+    } else {
         console.log(user_token);
         const route = "/user/get_profil";
         let options = {
             method: 'POST',
             headers: {
-                "X-CSRF-TOKEN":getCsrfToken(),
+                "X-CSRF-TOKEN": getCsrfToken(),
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({"user_token": user_token}),
+            body: JSON.stringify({ "user_token": user_token }),
         }
-        console.log (options);
-        fetch(Config.backendConfig.apiUrl+route, options)
-        .then(response => {
-            console.log(response)
+        console.log(options);
+        try {
+            const response = await fetch(Config.backendConfig.apiUrl + route, options);
+            console.log(response);
             if (!response.ok) {
-                throw new Error('La requête a échoué.');
+                throw new NetworkError('La requête a échoué.');
             }
-            return response.json();
-        }) // Si le script PHP renvoie du JSON
-        .then(data => {
-            // Traiter la réponse du serveur (si nécessaire)
+            const data = await response.json();
             console.log(data);
-            profil.value=data;
-
-        })
-        .catch(error => {
-            // Gérer les erreurs de la requête
+            return data;
+        } catch (error) {
             console.error("Erreur lors de l'envoi du formulaire:", error);
-            alert ("erreur : veuillez contacter l'administrateur du site")
-        });
+            alert("erreur : Nous ne parvenons pas à récupérer votre profil. Veuillez contacter l'administrateur du site");
+            return null;
+        }
     }
 }
 
-onMounted (()=>{
-    if (true) {
-    retrieve_profil();}
+const save_change = () => {
+    
+}
+
+onMounted (async ()=>{
+
+    profil.value= await retrieve_profil();
+    console.log (profil.value);
 })
 
 

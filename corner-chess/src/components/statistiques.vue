@@ -9,11 +9,11 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 
 import {ref,onMounted} from "vue";
-import { gameStore } from '../stores/game_store';
+import { gameStore } from '../stores/game';
 import { useRouter } from 'vue-router';
 
 import Config from "../config";
@@ -61,15 +61,7 @@ onMounted(async () => {
   await retrieve_game_list(); // Appelez retrieve_game_list lorsque le composant est monté
 });
 
-const handleClick = (game,event) => {
 
-    console.log (game);
-    window.localStorage.setItem("current_game",JSON.stringify(game))
-    current_game.setId(game.id);
-    current_game.setBoard(game.board);
-    console.log (current_game.Board);
-    router.push({ name: 'game'});
-}
 
 </script>
 

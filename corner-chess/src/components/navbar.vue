@@ -14,11 +14,11 @@
                     <li class="nav-item fs-2 p-3">
                         <router-link to="/game_list" class="nav-link">Parties en cours</router-link>
                     </li>
-                    <li class="nav-item fs-2 p-3">
+                    <li class="nav-item fs-2 p-3 d-none">
                         <router-link to="/statistiques" class="nav-link">Statistiques</router-link>
                     </li>
                     <li class="nav-item fs-2 p-3">
-                        <router-link to="/sandbox" class="nav-link">Sandbox</router-link>
+                        <a class="nav-link" v-on:click="activate_sandbox" >Libre</a>
                     </li>
                 </ul>
             </div>
@@ -30,9 +30,14 @@
 
 
 
-<script setup>
+<script setup lang="ts">
 import Config from "../config";
 import { getCsrfToken,AskCsrfToken,getUserToken } from "@/script/token";
+import { RouteComponent, useRouter } from 'vue-router';
+import { gameStore } from '../stores/game';
+
+const router:RouteComponent = useRouter();
+const current_game = gameStore();
 
 const ready_to_play = () => {
 
@@ -75,6 +80,12 @@ const ready_to_play = () => {
         });
     }
 
+}
+
+const activate_sandbox = () => {
+
+    current_game.setIsSandbox(true);
+    router.push({ name: 'game'});
 }
 
 </script>
